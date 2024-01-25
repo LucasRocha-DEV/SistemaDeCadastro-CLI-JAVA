@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Scanner;
+import java.io.PrintWriter;
 
 class Usuario {
     String nome;
@@ -28,6 +29,7 @@ public class Main {
     public static void main(String[] args) {
         Usuario usuario = cadastrarUsuario();
         imprimirUsuario(usuario);
+        salvarUsuarioEmArquivo(usuario, 1);
     }
 
     public static Usuario cadastrarUsuario() {
@@ -50,5 +52,15 @@ public class Main {
 
     public static void imprimirUsuario(Usuario usuario) {
         System.out.println(usuario);
+    }
+    public static void salvarUsuarioEmArquivo(Usuario usuario, int id) {
+        try {
+            PrintWriter writer = new PrintWriter(id + "-" + usuario.nome.toUpperCase() + ".TXT", "UTF-8");
+            writer.println(usuario);
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Ocorreu um erro ao salvar o usuário em um arquivo.");
+            e.printStackTrace();
+        }
     }
 }
