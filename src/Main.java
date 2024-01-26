@@ -34,7 +34,7 @@ public class Main {
                     // Implementar cadastro de nova pergunta
                     break;
                 case 4:
-                    // Implementar deleção de pergunta
+                    // Implementar deletar pergunta
                     break;
                 case 5:
                     // Implementar pesquisa de usuário
