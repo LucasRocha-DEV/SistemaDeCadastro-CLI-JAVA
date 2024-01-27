@@ -137,7 +137,12 @@ public class Main {
             e.printStackTrace();
         }
 
-        perguntas.remove(numeroPergunta - 1);
+        if (numeroPergunta - 1 < perguntas.size()) {
+            perguntas.remove(numeroPergunta - 1);
+        } else {
+            System.out.println("Não existe pergunta com o número fornecido.");
+            return;
+        }
 
         try {
             PrintWriter writer = new PrintWriter("formulario.txt", "UTF-8");
