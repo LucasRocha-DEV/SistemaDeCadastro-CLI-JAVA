@@ -1,5 +1,8 @@
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.io.PrintWriter;
 import java.io.IOException;
@@ -31,10 +34,15 @@ public class Main {
                     listarUsuariosCadastrados();
                     break;
                 case 3:
-                    // Implementar cadastro de nova pergunta
+                    System.out.print("Digite a nova pergunta: ");
+                    scanner.nextLine();  // Consume newline left-over
+                    String pergunta = scanner.nextLine();
+                    adicionarPergunta(pergunta);
                     break;
                 case 4:
-                    // Implementar deletar pergunta
+                    System.out.print("Digite o número da pergunta a ser deletada: ");
+                    int numeroPergunta = scanner.nextInt();
+                    deletarPergunta(numeroPergunta);
                     break;
                 case 5:
                     // Implementar pesquisa de usuário
@@ -98,6 +106,48 @@ public class Main {
                 System.out.println("Ocorreu um erro ao ler o arquivo do usuário.");
                 e.printStackTrace();
             }
+        }
+    }
+    public static void adicionarPergunta(String pergunta) {
+        try {
+            PrintWriter writer = new PrintWriter(new FileOutputStream(new File("formulario.txt"), true));
+            writer.append(pergunta + "\n");
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Ocorreu um erro ao adicionar a pergunta ao formulário.");
+            e.printStackTrace();
+        }
+    }
+
+    public static void deletarPergunta(int numeroPergunta) {
+        if (numeroPergunta <= 4) {
+            System.out.println("Não é possível deletar as 4 primeiras perguntas.");
+            return;
+        }
+
+        List<String> perguntas = new ArrayList<>();
+        try {
+            Scanner scanner = new Scanner(new File("formulario.txt"));
+            while (scanner.hasNextLine()) {
+                perguntas.add(scanner.nextLine());
+            }
+            scanner.close();
+        } catch (IOException e) {
+            System.out.println("Ocorreu um erro ao ler o formulário.");
+            e.printStackTrace();
+        }
+
+        perguntas.remove(numeroPergunta - 1);
+
+        try {
+            PrintWriter writer = new PrintWriter("formulario.txt", "UTF-8");
+            for (String pergunta : perguntas) {
+                writer.println(pergunta);
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Ocorreu um erro ao reescrever o formulário.");
+            e.printStackTrace();
         }
     }
 }
